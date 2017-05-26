@@ -1,0 +1,59 @@
+{
+  "name": "vscode-git-tags",
+  "displayName": "git-tags",
+  "description": "quick manage tags for a git repo",
+  "version": "1.0.0",
+  "publisher": "howardzuo",
+  "engines": {
+    "vscode": "^1.12.0"
+  },
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+  },
+  "categories": [
+    "Debuggers"
+  ],
+  "icon": "images/git-logo.png",
+  "bugs": {
+    "url": "https://github.com/leftstick/vscode-git-tags/issues",
+    "email": "leftstick@qq.com"
+  },
+  "homepage": "https://github.com/leftstick/vscode-git-tags/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leftstick/vscode-git-tags.git"
+  },
+  "activationEvents": [
+    "*"
+  ],
+  "license": "GPL-3.0",
+  "main": "./out/src",
+  "contributes": {
+    "menus": {
+      "scm/title": [
+        {
+          "command": "extension.gittags",
+          "group": "tags",
+          "when": "config.git.enabled && scmProvider == git && gitState == idle"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "extension.gittags",
+        "title": "Git tags"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.64",
+    "@types/node": "^7.0.22",
+    "typescript": "^2.3.3",
+    "vscode": "^1.1.0"
+  },
+  "dependencies": {
+    "lodash.template": "^4.4.0"
+  }
+}
