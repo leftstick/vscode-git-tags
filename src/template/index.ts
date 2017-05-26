@@ -17,17 +17,11 @@ const compiled = t(`
                     <% const tag = obj.tags[i]; %>
 
                     <div class="line">
-                        <div class="hash">
-                            <%= tag.hash %>
-                        </div>
-                        <div class="tag">
-                            <%= tag.tag %>
-                        </div>
-                        <div class="commit">
-                            <%= tag.commitMessage %>
-                        </div>
+                        <div class="hash"><%= tag.hash %></div>
+                        <div class="tag"><%= tag.tag %></div>
+                        <div class="commit"><%= tag.commitMessage %></div>
                         <div class="oper">
-                            删除
+                            <a href="<%= encodeURI('command:extension.deleteTag?' + JSON.stringify([tag.tag])) %>">DEL</a>
                         </div>
                     </div>
 
