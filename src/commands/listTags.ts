@@ -12,9 +12,6 @@ export function listCMD(provider: GitTagsViewProvider, refreshTagsView: Function
             .then(success => {
                 return provider
                     .updateTags()
-                    .then(() => {
-                        vscode.window.setStatusBarMessage('Double click on commit for copying hash into clipboard', 5000);
-                    })
                     .catch(err => {
                         vscode.window.showErrorMessage(err);
                     });

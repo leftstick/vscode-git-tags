@@ -8,6 +8,9 @@ const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gittags.css')}" >
             <body>
+                <% if (!obj.tags.length) { %>
+                    <div class="empty">There is no any tag found!</div>
+                <% } %>
                 <div class="container">
                     <% for(var i = 0; i < obj.tags.length; i++) { %>
                     <% const tag = obj.tags[i]; %>
