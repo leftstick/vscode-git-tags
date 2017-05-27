@@ -29,8 +29,6 @@ export class GitTagsViewProvider implements vscode.TextDocumentContentProvider {
 
         this._tags = await tags(cwd);
 
-        console.log(this._tags);
-
         this._onDidChange.fire(GITTAGSURI);
     }
 }

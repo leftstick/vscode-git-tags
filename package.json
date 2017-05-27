@@ -1,6 +1,6 @@
 {
   "name": "vscode-git-tags",
-  "displayName": "git-tags",
+  "displayName": "Git Tags",
   "description": "quick manage tags for a git repo",
   "version": "1.0.0",
   "publisher": "howardzuo",
@@ -34,6 +34,11 @@
     "menus": {
       "scm/title": [
         {
+          "command": "extension.gitcreatetag",
+          "group": "tags",
+          "when": "config.git.enabled && scmProvider == git && gitState == idle"
+        },
+        {
           "command": "extension.gittags",
           "group": "tags",
           "when": "config.git.enabled && scmProvider == git && gitState == idle"
@@ -42,8 +47,12 @@
     },
     "commands": [
       {
+        "command": "extension.gitcreatetag",
+        "title": "Create Tag"
+      },
+      {
         "command": "extension.gittags",
-        "title": "Git tags"
+        "title": "Listing Tags"
       }
     ]
   },

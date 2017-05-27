@@ -8,10 +8,6 @@ const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gittags.css')}" >
             <body>
-                <div class="create-section">
-                    <input placeholder="Type new tag..."/>
-                    <a>Create Tag</a>
-                </div>
                 <div class="container">
                     <% for(var i = 0; i < obj.tags.length; i++) { %>
                     <% const tag = obj.tags[i]; %>
@@ -21,7 +17,7 @@ const compiled = t(`
                         <div class="tag"><%= tag.tag %></div>
                         <div class="commit"><%= tag.commitMessage %></div>
                         <div class="oper">
-                            <a href="<%= encodeURI('command:extension.deleteTag?' + JSON.stringify([tag.tag])) %>">DEL</a>
+                            <a class="del" href="<%= encodeURI('command:extension.deleteGitTag?' + JSON.stringify([tag.tag])) %>">DEL</a>
                         </div>
                     </div>
 

@@ -3,6 +3,9 @@
 import * as vscode from 'vscode';
 
 import { GitTagsViewProvider, GITTAGSURI } from './gitTagsViewProvider';
+import { create, syncCreate, deleteTag, syncDelete } from './services/gitTagsResolver';
+
+import { createCMD, deleteCMD, listCMD } from './commands';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -16,10 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
     const provider = new GitTagsViewProvider();
     const registration = vscode.workspace.registerTextDocumentContentProvider('gittags', provider);
 
-
-    const disposable = vscode.commands.registerCommand('extension.gittags', () => {
-        // The code you place here will be executed every time your command is executed
-
+    function refreshTagsView() {
         if (vscode.workspace.textDocuments.some(t => t.fileName === '/gittags')) {
             return provider
                 .updateTags()
@@ -27,24 +27,13 @@ export function activate(context: vscode.ExtensionContext) {
                     vscode.window.showErrorMessage(err);
                 });
         }
+    }
 
-        vscode.commands.executeCommand('vscode.previewHtml', GITTAGSURI, vscode.ViewColumn.One, 'Git Tags')
-            .then(success => {
-                return provider
-                    .updateTags()
-                    .then(() => {
-                        vscode.window.setStatusBarMessage('Double click on commit for copying hash into clipboard', 5000);
-                    })
-                    .catch(err => {
-                        vscode.window.showErrorMessage(err);
-                    });
-            }, reason => {
-                vscode.window.showErrorMessage(reason);
-            });
+    context.subscriptions.push(listCMD(provider, refreshTagsView));
+    context.subscriptions.push(createCMD(provider, refreshTagsView));
+    context.subscriptions.push(deleteCMD(provider, refreshTagsView));
 
-    });
-
-    context.subscriptions.push(disposable, registration);
+    context.subscriptions.push(registration);
 
 }
 

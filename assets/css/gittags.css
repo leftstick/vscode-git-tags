@@ -14,25 +14,6 @@ html, body {
     flex-grow: 0;
 }
 
-.create-section {
-    width: 100%;
-    height: 35px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #fff;
-}
-
-.create-section input {
-    height: 100%;
-    background: transparent;
-    border: none;
-    padding: 5px;
-    color: #fff;
-}
-
-.create-section input:focus {
-    outline: none;
-}
-
 .container {
     overflow-y: auto;
 }
@@ -40,7 +21,11 @@ html, body {
 .line {
     display: flex;
     flex-direction: row;
-    padding: 5px 0 5px 0;
+    padding: 7px 0 7px 0;
+}
+
+.line:hover {
+    color: #48fa7b;
 }
 
 .hash {
@@ -64,4 +49,9 @@ html, body {
     width: 100px;
     margin-left: 5px;
     flex-shrink: 0;
+}
+
+.oper .del {
+    color: #ff2441;
+    text-decoration: none;
 }

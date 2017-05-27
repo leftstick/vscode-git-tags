@@ -6,7 +6,7 @@ import { Tag } from '../model';
 export function tags(cwd: string): Promise<Array<Tag>> {
 
     return new Promise((resolve, reject) => {
-        child_process.exec(`git log --tags --decorate --simplify-by-decoration --oneline`, {
+        child_process.exec('git log --tags --decorate --simplify-by-decoration --oneline', {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
@@ -19,7 +19,7 @@ export function tags(cwd: string): Promise<Array<Tag>> {
             const tags: Array<Tag> = stdout
                 .replace(/\r\n/mg, '\n')
                 .split('\n')
-                .filter(line => /\(tag:\s/.test(line))
+                .filter(line => /[\(\s]tag:\s/.test(line))
                 .map(line => {
                     const matched = line.match(/([a-z0-9]{7})\s\((.*)\)\s(.*)/);
                     return {
@@ -35,4 +35,70 @@ export function tags(cwd: string): Promise<Array<Tag>> {
 
 }
 
+export function create(val, cwd: string): Promise<undefined> {
+    if (!val) {
+        return Promise.reject('NO_VALUE');
+    }
+    return new Promise((resolve, reject) => {
+        child_process.exec(`git tag ${val}`, {
+            cwd: cwd
+        }, (error, stdout, stderr) => {
+            if (stderr) {
+                return reject(stderr);
+            }
+            if (error) {
+                return reject(error);
+            }
+            resolve();
+        });
+    });
+}
+
+export function syncCreate(cwd: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        child_process.exec('git push --tags', {
+            cwd: cwd
+        }, (error, stdout, stderr) => {
+            if (error) {
+                return reject('SYNC_FAILED');
+            }
+            if (stderr && !/\[new tag\]/.test(stderr)) {
+                return reject('SYNC_FAILED');
+            }
+            resolve('SYNCED');
+        });
+    });
+}
+
+export function deleteTag(tag: string, cwd: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        child_process.exec(`git tag -d ${tag}`, {
+            cwd: cwd
+        }, (error, stdout, stderr) => {
+            if (stderr && !/Deleted tag/.test(stderr)) {
+                return reject('DEL_FAILED');
+            }
+            if (error) {
+                return reject('DEL_FAILED');
+            }
+            resolve('DELETED');
+        });
+    });
+}
+
+export function syncDelete(tag: string, cwd: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+        child_process.exec(`git push origin :refs/tags/${tag}`, {
+            cwd: cwd
+        }, (error, stdout, stderr) => {
+            if (error) {
+                return reject('SYNC_FAILED');
+            }
+            if (stderr && !/\[deleted\]/.test(stderr)) {
+                return reject('SYNC_FAILED');
+            }
+            resolve('SYNCED');
+        });
+    });
+}
 
