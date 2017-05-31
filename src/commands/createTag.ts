@@ -5,38 +5,36 @@ import { GitTagsViewProvider, GITTAGSURI } from '../gitTagsViewProvider';
 import { create, syncCreate } from '../services/gitTagsResolver';
 
 export function createCMD(provider: GitTagsViewProvider, refreshTagsView: Function): vscode.Disposable {
-    return vscode.commands.registerCommand('extension.gitcreatetag', () => {
-        vscode.window.showInputBox({
-            placeHolder: 'Type a tag...'
-        })
-            .then(val => {
-                return create(val, vscode.workspace.rootPath);
-            })
-            .then(() => {
-                refreshTagsView();
-                return vscode.window.showQuickPick(['Yes', 'No'], {
-                    placeHolder: 'Would you like to sync this tag to remote repository?'
-                });
-            }, err => {
-                if (err !== 'NO_VALUE') {
-                    vscode.window.showErrorMessage(err);
-                }
-                return 'No';
-            })
-            .then(val => {
-                if (val === 'Yes') {
-                    return syncCreate(vscode.workspace.rootPath);
-                }
-            })
-            .then(val => {
-                if (val === 'SYNCED') {
-                    vscode.window.setStatusBarMessage('Tag synchronised', 3000);
-                }
-            }, err => {
-                if (err === 'SYNC_FAILED') {
-                    vscode.window.showErrorMessage('Tag synchronised failed');
-                }
+    return vscode.commands.registerCommand('extension.gitcreatetag', async function () {
+
+        try {
+            const tag = await vscode.window.showInputBox({
+                placeHolder: 'Type a tag...'
             });
+
+            if (!tag || !tag.trim()) {
+                return;
+            }
+
+            await create(tag, vscode.workspace.rootPath);
+
+            refreshTagsView();
+
+            const picked = await vscode.window.showQuickPick(['Yes', 'No'], {
+                placeHolder: 'Would you like to sync this tag to remote repository?'
+            });
+
+            if (picked !== 'Yes') {
+                return;
+            }
+
+            await syncCreate(vscode.workspace.rootPath);
+
+            vscode.window.setStatusBarMessage('Tag synchronised', 3000);
+
+        } catch (err) {
+            vscode.window.showErrorMessage(err);
+        }
 
     });
 }
