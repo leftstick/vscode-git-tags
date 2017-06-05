@@ -2,7 +2,7 @@
   "name": "vscode-git-tags",
   "displayName": "Git Tags",
   "description": "quick manage tags for a git repo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "howardzuo",
   "engines": {
     "vscode": "^1.12.0"
@@ -57,9 +57,9 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.64",
-    "@types/node": "^7.0.22",
-    "typescript": "^2.3.3",
+    "@types/lodash": "^4.14.65",
+    "@types/node": "^7.0.27",
+    "typescript": "^2.3.4",
     "vscode": "^1.1.0"
   },
   "dependencies": {

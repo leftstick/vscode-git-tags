@@ -8,12 +8,14 @@ export function listCMD(provider: GitTagsViewProvider, refreshTagsView: Function
 
         refreshTagsView();
 
-        try {
-            await vscode.commands.executeCommand('vscode.previewHtml', GITTAGSURI, vscode.ViewColumn.One, 'Git Tags');
+        if (vscode.workspace.textDocuments.every(t => t.fileName !== '/gittags')) {
+            try {
+                await vscode.commands.executeCommand('vscode.previewHtml', GITTAGSURI, vscode.ViewColumn.One, 'Git Tags');
 
-            await provider.updateTags();
-        } catch (err) {
-            vscode.window.showErrorMessage(err);
+                await provider.updateTags();
+            } catch (err) {
+                vscode.window.showErrorMessage(err);
+            }
         }
 
     });
