@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 
 import { GitTagsViewProvider, GITTAGSURI } from '../gitTagsViewProvider';
 
-import { create, syncCreate } from '../services/gitTagsResolver';
+import { create, createWithMessage, syncCreate } from '../services/gitTagsResolver';
 
 export function createCMD(provider: GitTagsViewProvider, refreshTagsView: Function): vscode.Disposable {
     return vscode.commands.registerCommand('extension.gitcreatetag', async function () {
@@ -16,7 +16,15 @@ export function createCMD(provider: GitTagsViewProvider, refreshTagsView: Functi
                 return;
             }
 
-            await create(tag, vscode.workspace.rootPath);
+            const message = await vscode.window.showInputBox({
+                placeHolder: 'Type a message...'
+            });
+
+            if (message) {
+                await createWithMessage(tag, message, vscode.workspace.rootPath);
+            } else {
+                await create(tag, vscode.workspace.rootPath);
+            }
 
             refreshTagsView();
 

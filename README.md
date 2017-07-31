@@ -23,13 +23,20 @@ I assume you have [git](https://git-scm.com/) installed.
 
 `vscode-git-tags` will provide you a handy way for managing tags
 
+
+## Change Log
+
+### 2017-07-31
+
+1. support annotated tag(with message)
+
 ## LICENSE ##
 
 [GPL v3 License](https://raw.githubusercontent.com/leftstick/vscode-git-tags/master/LICENSE)
 
 
 [vs-url]: https://marketplace.visualstudio.com/items?itemName=howardzuo.vscode-git-tags
-[vs-image]: http://vsmarketplacebadge.apphb.com/version/howardzuo.vscode-git-tags.svg
-[install-url]: http://vsmarketplacebadge.apphb.com/installs/howardzuo.vscode-git-tags.svg
-[rate-url]: http://vsmarketplacebadge.apphb.com/rating/howardzuo.vscode-git-tags.svg
+[vs-image]: https://vsmarketplacebadge.apphb.com/version/howardzuo.vscode-git-tags.svg
+[install-url]: https://vsmarketplacebadge.apphb.com/installs/howardzuo.vscode-git-tags.svg
+[rate-url]: https://vsmarketplacebadge.apphb.com/rating/howardzuo.vscode-git-tags.svg
 [license-url]: https://img.shields.io/github/license/leftstick/vscode-git-tags.svg

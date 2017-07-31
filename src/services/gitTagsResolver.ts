@@ -35,12 +35,16 @@ export function tags(cwd: string): Promise<Array<Tag>> {
 
 }
 
-export function create(val, cwd: string): Promise<undefined> {
+export function create(val: string, cwd: string): Promise<undefined> {
+    return createWithMessage(val, '', cwd);
+}
+
+export function createWithMessage(val: string, message: string, cwd: string): Promise<undefined> {
     if (!val) {
         return Promise.reject('NO_VALUE');
     }
     return new Promise((resolve, reject) => {
-        child_process.exec(`git tag ${val}`, {
+        child_process.exec(`git tag ${message ? '-m "' + message + '"' : ''} ${val}`, {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (stderr) {
