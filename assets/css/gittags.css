@@ -12,6 +12,7 @@ html, body {
     display: flex;
     flex-direction: column;
     flex-grow: 0;
+    padding-top: 15px;
 }
 
 .container {
@@ -63,4 +64,5 @@ html, body {
 .oper .del {
     color: #ff2441;
     text-decoration: none;
+    z-index: 10;
 }
