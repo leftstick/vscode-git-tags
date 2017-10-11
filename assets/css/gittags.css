@@ -38,14 +38,21 @@ html, body {
     color: #48fa7b;
 }
 
+.line > div {
+    padding: 0 5px 0 5px;
+}
+
 .hash {
     width: 70px;
     flex-shrink: 0;
 }
 
 .tag {
-    width: 80px;
+    width: 120px;
     flex-shrink: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .commit {
