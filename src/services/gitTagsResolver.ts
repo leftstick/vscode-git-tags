@@ -1,12 +1,14 @@
 import * as child_process from 'child_process';
 import * as os from 'os';
+import * as vscode from 'vscode';
 
 import { Tag } from '../model';
+const gitpath = vscode.workspace.getConfiguration('gito').get("path") || 'git';
 
 export function tags(cwd: string): Promise<Array<Tag>> {
 
     return new Promise((resolve, reject) => {
-        child_process.exec('git log --tags --decorate --simplify-by-decoration --oneline', {
+        child_process.exec(gitpath + ' log --tags --decorate --simplify-by-decoration --oneline', {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
@@ -44,7 +46,7 @@ export function createWithMessage(val: string, message: string, cwd: string): Pr
         return Promise.reject('NO_VALUE');
     }
     return new Promise((resolve, reject) => {
-        child_process.exec(`git tag ${message ? '-m "' + message + '"' : ''} ${val}`, {
+        child_process.exec(`${gitpath} tag ${message ? '-m "' + message + '"' : ''} ${val}`, {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (stderr) {
@@ -60,7 +62,7 @@ export function createWithMessage(val: string, message: string, cwd: string): Pr
 
 export function syncCreate(cwd: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        child_process.exec('git push --tags', {
+        child_process.exec(gitpath + ' push --tags', {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
@@ -76,7 +78,7 @@ export function syncCreate(cwd: string): Promise<string> {
 
 export function deleteTag(tag: string, cwd: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        child_process.exec(`git tag -d ${tag}`, {
+        child_process.exec(`${gitpath} tag -d ${tag}`, {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (stderr && !/Deleted tag/.test(stderr)) {
@@ -92,7 +94,7 @@ export function deleteTag(tag: string, cwd: string): Promise<string> {
 
 export function syncDelete(tag: string, cwd: string): Promise<string> {
     return new Promise((resolve, reject) => {
-        child_process.exec(`git push origin :refs/tags/${tag}`, {
+        child_process.exec(`${gitpath} push origin :refs/tags/${tag}`, {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
