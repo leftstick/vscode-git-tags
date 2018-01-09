@@ -3,7 +3,7 @@ import * as os from 'os';
 import * as vscode from 'vscode';
 
 import { Tag } from '../model';
-const gitpath = vscode.workspace.getConfiguration('git').get("path") || 'git';
+const gitpath = vscode.workspace.getConfiguration('git').get('path') || 'git';
 
 export function tags(cwd: string): Promise<Array<Tag>> {
 

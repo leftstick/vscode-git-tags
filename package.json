@@ -2,10 +2,10 @@
   "name": "vscode-git-tags",
   "displayName": "Git Tags",
   "description": "quick manage tags for a git repo",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "publisher": "howardzuo",
   "engines": {
-    "vscode": "^1.17.0"
+    "vscode": "^1.19.0"
   },
   "scripts": {
     "vscode:prepublish": "tsc -p ./",
@@ -57,10 +57,10 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.77",
-    "@types/node": "^8.0.33",
-    "typescript": "^2.5.3",
-    "vscode": "^1.1.5"
+    "@types/lodash": "^4.14.92",
+    "@types/node": "^9.3.0",
+    "typescript": "^2.6.2",
+    "vscode": "^1.1.10"
   },
   "dependencies": {
     "lodash.template": "^4.4.0"
