@@ -8,24 +8,13 @@ const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gittags.css')}" >
             <body>
-                <% if (!obj.tags.length) { %>
-                    <div class="empty">There is no any tag found!</div>
-                <% } %>
-                <div class="container">
-                    <% for(var i = 0; i < obj.tags.length; i++) { %>
-                    <% const tag = obj.tags[i]; %>
+                <div id="container" class="ag-theme-blue"></div>
 
-                    <div class="line">
-                        <div class="hash"><%= tag.hash %></div>
-                        <div class="tag"><%= tag.tag %></div>
-                        <div class="commit"><%= tag.commitMessage %></div>
-                        <div class="oper">
-                            <a class="del" href="<%= encodeURI('command:extension.deleteGitTag?' + JSON.stringify([tag.tag])) %>">DEL</a>
-                        </div>
-                    </div>
-
-                    <% } %>
-                </div>
+                <script>
+                window.rows = <%= JSON.stringify(obj.tags) %>
+                </script>
+                <script src="${assetPath('js', 'aggrid.js')}"></script>
+                <script src="${assetPath('js', 'app.js')}"></script>
             </body>
         </html>
     `, { variable: 'obj' });

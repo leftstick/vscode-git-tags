@@ -12,64 +12,15 @@ html, body {
     display: flex;
     flex-direction: column;
     flex-grow: 0;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
-.container {
-    overflow-y: auto;
-}
-
-.empty {
-    display: flex;
+#container {
     height: 100%;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
 }
 
-.line {
-    display: flex;
-    flex-direction: row;
-    padding: 7px 0 7px 0;
-}
-
-.line:hover {
-    color: #48fa7b;
-}
-
-.line > div {
-    padding: 0 5px 0 5px;
-}
-
-.hash {
-    width: 70px;
-    flex-shrink: 0;
-}
-
-.tag {
-    width: 120px;
-    flex-shrink: 0;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.commit {
-    flex: 2;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.oper {
-    width: 100px;
-    margin-left: 5px;
-    flex-shrink: 0;
-}
-
-.oper .del {
-    color: #ff2441;
+.delete {
+    color: red;
     text-decoration: none;
-    z-index: 10;
+    cursor: pointer
 }
