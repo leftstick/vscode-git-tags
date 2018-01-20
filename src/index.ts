@@ -15,7 +15,6 @@ export function activate(context: vscode.ExtensionContext) {
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "git tags" is now active!');
 
-
     const provider = new GitTagsViewProvider();
     const registration = vscode.workspace.registerTextDocumentContentProvider('gittags', provider);
 

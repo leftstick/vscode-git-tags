@@ -8,31 +8,32 @@ const gitpath = vscode.workspace.getConfiguration('git').get('path') || 'git';
 export function tags(cwd: string): Promise<Array<Tag>> {
 
     return new Promise((resolve, reject) => {
-        child_process.exec(gitpath + ' log --tags --decorate --simplify-by-decoration --oneline', {
-            cwd: cwd
-        }, (error, stdout, stderr) => {
-            if (error) {
-                return reject(error);
-            }
-            if (stderr) {
-                return reject(stderr);
-            }
 
-            const tags: Array<Tag> = stdout
-                .replace(/\r\n/mg, '\n')
-                .split('\n')
-                .filter(line => /[\(\s]tag:\s/.test(line))
-                .map(line => {
-                    const matched = line.match(/([a-z0-9]{7})\s\((.*)\)\s(.*)/);
-                    return {
-                        hash: matched[1],
-                        tag: matched[2].match(/tag:\s([^,\s]+)/)[1],
-                        commitMessage: matched[3]
-                    };
-                });
+            child_process.exec(gitpath + ' log --tags --decorate --simplify-by-decoration --oneline', {
+                cwd: cwd
+            }, (error, stdout, stderr) => {
+                if (error) {
+                    return reject(error);
+                }
+                if (stderr) {
+                    return reject(stderr);
+                }
+    
+                const tags: Array<Tag> = stdout
+                    .replace(/\r\n/mg, '\n')
+                    .split('\n')
+                    .filter(line => /[\(\s]tag:\s/.test(line))
+                    .map(line => {
+                        const matched = line.match(/([a-z0-9]{7})\s\((.*)\)\s(.*)/);
+                        return {
+                            hash: matched[1],
+                            tag: matched[2].match(/tag:\s([^,\s]+)/)[1],
+                            commitMessage: matched[3]
+                        };
+                    });
+                resolve(tags);
+            });
 
-            resolve(tags);
-        });
     });
 
 }
@@ -106,5 +107,11 @@ export function syncDelete(tag: string, cwd: string): Promise<string> {
             resolve('SYNCED');
         });
     });
+}
+
+export function refreshFromRemote(cwd: string) {
+    child_process.exec(gitpath + ' fetch --tags', {cwd: cwd}, () => {
+        console.log('tags refreshed with remote');
+    });    
 }
 

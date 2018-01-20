@@ -27,9 +27,9 @@ export function html(tags: Array<Tag>) {
 }
 
 function assetPath(...args) {
-    return vscode.Uri.file(path.join(__dirname, '..', '..', '..', 'assets', ...args)).toString();
+    return vscode.Uri.file(path.join(__dirname, '..', '..', 'assets', ...args)).toString();
 }
 
 function nodeModulesPath(...args) {
-    return vscode.Uri.file(path.join(__dirname, '..', '..', '..', 'node_modules', ...args)).toString();
+    return vscode.Uri.file(path.join(__dirname, '..', '..', 'node_modules', ...args)).toString();
 }
