@@ -8,7 +8,6 @@ const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gittags.css')}" >
             <body>
-                <h1>this is test</h1>
                 <div id="container" class="ag-theme-blue"></div>
 
                 <script>
@@ -21,14 +20,15 @@ const compiled = t(`
     `, { variable: 'obj' });
 
 export function html(tags: Array<Tag>) {
-
     return compiled({
         tags
     });
 }
 
 function assetPath(...args) {
-    return vscode.Uri.file(path.join(__dirname, '..', '..', 'assets', ...args)).toString();
+    return vscode.Uri.file(path.join(__dirname, '..', '..', 'assets', ...args)).with({
+        scheme: 'vscode-resource'
+      });
 }
 
 function nodeModulesPath(...args) {
