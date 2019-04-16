@@ -41,4 +41,16 @@ function createWebPanel(context: vscode.ExtensionContext){
         null,
         context.subscriptions
     );
+
+    panel.webview.onDidReceiveMessage(
+        message => {
+            switch (message.command) {
+                case 'deleteTag':
+                    vscode.commands.executeCommand('extension.deleteGitTag', message.text);
+                    return;
+            }
+        },
+        undefined,
+        context.subscriptions
+    );
 }

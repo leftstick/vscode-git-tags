@@ -8,22 +8,16 @@ export function deleteCMD(provider: GitTagsViewProvider, refreshTagsView: Functi
     return vscode.commands.registerCommand('extension.deleteGitTag', async function (tag: string) {
 
         try {
-            await deleteTag(tag, vscode.workspace.rootPath);
-
-            refreshTagsView();
-
             const picked = await vscode.window.showQuickPick(['Yes', 'No'], {
                 placeHolder: 'Would you like to delete this tag from remote repository as well?'
             });
-
             if (picked !== 'Yes') {
                 return;
             }
-
+            await deleteTag(tag, vscode.workspace.rootPath);
+            refreshTagsView();
             await syncDelete(tag, vscode.workspace.rootPath);
-
             vscode.window.setStatusBarMessage(`Remote tag ${tag} deleted`, 3000);
-
         } catch (err) {
             vscode.window.showErrorMessage('Delete remote Tag failed');
         }

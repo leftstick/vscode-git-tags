@@ -19,12 +19,10 @@ export function activate(context: vscode.ExtensionContext) {
     // const registration = vscode.workspace.registerTextDocumentContentProvider('gittags', provider);
 
     async function refreshTagsView() {
-        if (vscode.workspace.textDocuments.some(t => t.fileName === '/gittags')) {
-            try {
-                await provider.refreshView();
-            } catch (err) {
-                vscode.window.showErrorMessage(err);
-            }
+        try {
+            await provider.refreshView();
+        } catch (err) {
+            vscode.window.showErrorMessage(err);
         }
     }
 
