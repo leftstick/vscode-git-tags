@@ -16,24 +16,23 @@ export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "git tags" is now active!');
 
     const provider = new GitTagsViewProvider();
-    const registration = vscode.workspace.registerTextDocumentContentProvider('gittags', provider);
+    // const registration = vscode.workspace.registerTextDocumentContentProvider('gittags', provider);
 
     async function refreshTagsView() {
         if (vscode.workspace.textDocuments.some(t => t.fileName === '/gittags')) {
             try {
-                await provider.updateTags();
+                await provider.refreshView();
             } catch (err) {
                 vscode.window.showErrorMessage(err);
             }
         }
     }
 
-    context.subscriptions.push(listCMD(provider, refreshTagsView));
+    context.subscriptions.push(listCMD(context, provider, refreshTagsView));
     context.subscriptions.push(createCMD(provider, refreshTagsView));
     context.subscriptions.push(deleteCMD(provider, refreshTagsView));
 
-    context.subscriptions.push(registration);
-
+    // context.subscriptions.push(registration);
 }
 
 // this method is called when your extension is deactivated

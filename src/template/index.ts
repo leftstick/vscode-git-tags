@@ -8,6 +8,7 @@ const compiled = t(`
         <html>
             <link rel="stylesheet" href="${assetPath('css', 'gittags.css')}" >
             <body>
+                <h1>this is test</h1>
                 <div id="container" class="ag-theme-blue"></div>
 
                 <script>

@@ -7,32 +7,51 @@ import { html } from './template';
 export const GITTAGSURI = vscode.Uri.parse('gittags://sourcecontrol/gittags');
 
 
-export class GitTagsViewProvider implements vscode.TextDocumentContentProvider {
-    private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
-    private _tags: Array<Tag>;
+export class GitTagsViewProvider {
+    // private _onDidChange = new vscode.EventEmitter<vscode.Uri>();
+    // private _tags: Array<Tag>;
+    private _panel: vscode.WebviewPanel;
 
     constructor() {
         refreshFromRemote(vscode.workspace.rootPath)
     }
 
-    public provideTextDocumentContent(uri: vscode.Uri): string {
-        if (!this._tags) {
-            return '';
-        }
+    // public provideTextDocumentContent(uri: vscode.Uri): string {
+    //     if (!this._tags) {
+    //         return '';
+    //     }
 
-        return html(this._tags);
+    //     return html(this._tags);
+    // }
+
+    set panel(panel: vscode.WebviewPanel){
+        this._panel = panel
     }
 
-    get onDidChange(): vscode.Event<vscode.Uri> {
-        return this._onDidChange.event;
-    }
+    // get onDidChange(): vscode.Event<vscode.Uri> {
+    //     return this._onDidChange.event;
+    // }
 
-    public async updateTags() {
+    // public async updateTags() {
 
+    //     const cwd = vscode.workspace.rootPath;
+
+    //     this._tags = await tags(cwd);
+
+    //     this._onDidChange.fire(GITTAGSURI);
+    // }
+
+    private async getInitHtml(): Promise<string> {
         const cwd = vscode.workspace.rootPath;
+        const tagList =  await tags(cwd);
+        return html(tagList);
+    }
 
-        this._tags = await tags(cwd);
-
-        this._onDidChange.fire(GITTAGSURI);
+    public async refreshView() {
+        if(!this._panel){
+            return;
+        }
+        const html = await this.getInitHtml()
+        this._panel.webview.html = html;
     }
 }
