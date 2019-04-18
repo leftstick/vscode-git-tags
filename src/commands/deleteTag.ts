@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { GitTagsViewProvider, GITTAGSURI } from '../gitTagsViewProvider';
+import { GitTagsViewProvider } from '../gitTagsViewProvider';
 
 import { deleteTag, syncDelete } from '../services/gitTagsResolver';
 
@@ -11,14 +11,18 @@ export function deleteCMD(provider: GitTagsViewProvider, refreshTagsView: Functi
             const picked = await vscode.window.showQuickPick(['Yes', 'No'], {
                 placeHolder: 'Would you like to delete this tag from remote repository as well?'
             });
-            if (picked !== 'Yes') {
-                return;
+            const rootFolder = vscode.workspace.workspaceFolders[0].uri.fsPath
+            if (picked === 'Yes') {
+                await syncDelete(tag, rootFolder);
+                await deleteTag(tag, rootFolder);
+            }else {
+                await deleteTag(tag, rootFolder);
             }
-            await deleteTag(tag, vscode.workspace.rootPath);
+            
             refreshTagsView();
-            await syncDelete(tag, vscode.workspace.rootPath);
             vscode.window.setStatusBarMessage(`Remote tag ${tag} deleted`, 3000);
         } catch (err) {
+            refreshTagsView();
             vscode.window.showErrorMessage('Delete remote Tag failed');
         }
     });

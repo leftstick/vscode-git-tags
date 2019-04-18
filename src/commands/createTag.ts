@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { GitTagsViewProvider, GITTAGSURI } from '../gitTagsViewProvider';
+import { GitTagsViewProvider } from '../gitTagsViewProvider';
 
 import { create, createWithMessage, syncCreate } from '../services/gitTagsResolver';
 

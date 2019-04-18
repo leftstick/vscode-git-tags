@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 
-import { GitTagsViewProvider, GITTAGSURI } from '../gitTagsViewProvider';
+import { GitTagsViewProvider } from '../gitTagsViewProvider';
 
 let panel: vscode.WebviewPanel;
 
@@ -10,20 +10,25 @@ export function listCMD(context: vscode.ExtensionContext, provider: GitTagsViewP
     return vscode.commands.registerCommand('extension.gittags', async function () {
         // The code you place here will be executed every time your command is executed
 
+        if (!vscode.workspace.workspaceFolders || !vscode.workspace.workspaceFolders.length) {
+          return vscode.window.showWarningMessage(`Git Tags cannot be actived since no code repo opened`);
+        }
+        if (vscode.workspace.workspaceFolders.length !== 1) {
+          return vscode.window.showWarningMessage(`Git Tags cannot be actived in multiple workspace mode`);
+        }
+
         refreshTagsView();
 
-        if (vscode.workspace.textDocuments.every(t => t.fileName !== '/gittags')) {
-            try {
-                if (!panel) {
-                    createWebPanel(context);
-                } else if (!panel.visible) {
-                    panel.reveal()
-                }
-                provider.panel = panel;
-                provider.refreshView();
-            } catch (err) {
-                vscode.window.showErrorMessage(err);
+        try {
+            if (!panel) {
+                createWebPanel(context);
+            } else if (!panel.visible) {
+                panel.reveal()
             }
+            provider.panel = panel;
+            provider.refreshView();
+        } catch (err) {
+            vscode.window.showErrorMessage(err);
         }
 
     });

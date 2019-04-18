@@ -1,10 +1,7 @@
 import * as vscode from 'vscode';
 
-import { Tag } from './model';
 import { tags, refreshFromRemote } from './services/gitTagsResolver';
 import { html } from './template';
-
-export const GITTAGSURI = vscode.Uri.parse('gittags://sourcecontrol/gittags');
 
 
 export class GitTagsViewProvider {

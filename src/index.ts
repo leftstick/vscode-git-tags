@@ -2,8 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import { GitTagsViewProvider, GITTAGSURI } from './gitTagsViewProvider';
-import { create, syncCreate, deleteTag, syncDelete } from './services/gitTagsResolver';
+import { GitTagsViewProvider } from './gitTagsViewProvider';
 
 import { createCMD, deleteCMD, listCMD } from './commands';
 
