@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
         try {
             await provider.refreshView();
         } catch (err) {
-            vscode.window.showErrorMessage(err);
+            vscode.window.showErrorMessage(err.message || err);
         }
     }
 

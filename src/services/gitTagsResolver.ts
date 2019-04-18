@@ -66,7 +66,7 @@ export function syncCreate(cwd: string): Promise<string> {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
-                return reject(`SYNC_FAILED: ${error}`);
+                return reject(`SYNC_FAILED: ${error.message}`);
             }
             if (stderr && !/\[new tag\]/.test(stderr)) {
                 return reject(`SYNC_FAILED: ${stderr}`);
@@ -98,7 +98,7 @@ export function syncDelete(tag: string, cwd: string): Promise<string> {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
-                return reject(`SYNC_FAILED: ${error}`);
+                return reject(`SYNC_FAILED: ${error.message}`);
             }
             if (stderr && !/\[deleted\]/.test(stderr)) {
                 return reject(`SYNC_FAILED: ${stderr}`);
