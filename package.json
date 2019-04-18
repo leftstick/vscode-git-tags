@@ -2,7 +2,7 @@
   "name": "vscode-git-tags",
   "displayName": "Git Tags",
   "description": "quick manage tags for a git repo",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "publisher": "howardzuo",
   "engines": {
     "vscode": "^1.33.0"

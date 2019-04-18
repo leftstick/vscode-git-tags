@@ -23,7 +23,7 @@ export function deleteCMD(provider: GitTagsViewProvider, refreshTagsView: Functi
             vscode.window.setStatusBarMessage(`Remote tag ${tag} deleted`, 3000);
         } catch (err) {
             refreshTagsView();
-            vscode.window.showErrorMessage('Delete remote Tag failed');
+            vscode.window.showErrorMessage('Delete remote Tag failed', err);
         }
     });
 }

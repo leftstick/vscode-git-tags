@@ -98,10 +98,10 @@ export function syncDelete(tag: string, cwd: string): Promise<string> {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
-                return reject('SYNC_FAILED');
+                return reject(`SYNC_FAILED: ${error}`);
             }
             if (stderr && !/\[deleted\]/.test(stderr)) {
-                return reject('SYNC_FAILED');
+                return reject(`SYNC_FAILED: ${error}`);
             }
             resolve('SYNCED');
         });
