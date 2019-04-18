@@ -10,7 +10,7 @@ export class GitTagsViewProvider {
     private _panel: vscode.WebviewPanel;
 
     constructor() {
-        refreshFromRemote(vscode.workspace.rootPath)
+        refreshFromRemote(vscode.workspace.workspaceFolders[0].uri.fsPath)
     }
 
     // public provideTextDocumentContent(uri: vscode.Uri): string {
@@ -40,6 +40,7 @@ export class GitTagsViewProvider {
 
     private async getInitHtml(): Promise<string> {
         const cwd = vscode.workspace.rootPath;
+        await refreshFromRemote(vscode.workspace.workspaceFolders[0].uri.fsPath);
         const tagList =  await tags(cwd);
         return html(tagList);
     }

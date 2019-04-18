@@ -66,10 +66,10 @@ export function syncCreate(cwd: string): Promise<string> {
             cwd: cwd
         }, (error, stdout, stderr) => {
             if (error) {
-                return reject('SYNC_FAILED');
+                return reject(`SYNC_FAILED: ${error}`);
             }
             if (stderr && !/\[new tag\]/.test(stderr)) {
-                return reject('SYNC_FAILED');
+                return reject(`SYNC_FAILED: ${stderr}`);
             }
             resolve('SYNCED');
         });
@@ -101,7 +101,7 @@ export function syncDelete(tag: string, cwd: string): Promise<string> {
                 return reject(`SYNC_FAILED: ${error}`);
             }
             if (stderr && !/\[deleted\]/.test(stderr)) {
-                return reject(`SYNC_FAILED: ${error}`);
+                return reject(`SYNC_FAILED: ${stderr}`);
             }
             resolve('SYNCED');
         });
@@ -109,8 +109,12 @@ export function syncDelete(tag: string, cwd: string): Promise<string> {
 }
 
 export function refreshFromRemote(cwd: string) {
-    child_process.exec(gitpath + ' fetch --tags', {cwd: cwd}, () => {
-        console.log('tags refreshed with remote');
-    });    
+    return new Promise(resolve => {
+        child_process.exec(gitpath + ' fetch --tags', {cwd: cwd}, () => {
+            console.log('tags refreshed with remote');
+            resolve()
+        });
+    })
+    
 }
 
