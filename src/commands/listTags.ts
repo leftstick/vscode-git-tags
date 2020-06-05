@@ -21,7 +21,7 @@ export function listCMD(context: vscode.ExtensionContext, provider: GitTagsViewP
 
         try {
             if (!panel) {
-                createWebPanel(context);
+                createWebPanel(context, provider);
             } else if (!panel.visible) {
                 panel.reveal()
             }
@@ -34,7 +34,7 @@ export function listCMD(context: vscode.ExtensionContext, provider: GitTagsViewP
     });
 }
 
-function createWebPanel(context: vscode.ExtensionContext){
+function createWebPanel(context: vscode.ExtensionContext, provider: GitTagsViewProvider){
     panel = vscode.window.createWebviewPanel('gittags', 'git tags', vscode.ViewColumn.One, {
         enableScripts: true
     });
@@ -42,6 +42,7 @@ function createWebPanel(context: vscode.ExtensionContext){
         () => {
             // When the panel is closed, cancel any future updates to the webview content
             panel = null;
+            provider.panel = panel;
         },
         null,
         context.subscriptions

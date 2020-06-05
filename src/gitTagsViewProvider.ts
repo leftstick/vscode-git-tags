@@ -38,18 +38,18 @@ export class GitTagsViewProvider {
     //     this._onDidChange.fire(GITTAGSURI);
     // }
 
-    private async getInitHtml(): Promise<string> {
+    private async getInitHtml(webview: vscode.Webview): Promise<string> {
         const cwd = vscode.workspace.rootPath;
         await refreshFromRemote(vscode.workspace.workspaceFolders[0].uri.fsPath);
         const tagList =  await tags(cwd);
-        return html(tagList);
+        return html(tagList, webview);
     }
 
     public async refreshView() {
         if(!this._panel){
             return;
         }
-        const html = await this.getInitHtml()
+        const html = await this.getInitHtml(this._panel.webview)
         this._panel.webview.html = html;
     }
 }
