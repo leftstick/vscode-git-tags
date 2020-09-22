@@ -52,7 +52,7 @@
       },
       {
         "command": "extension.gittags",
-        "title": "Listing Tags"
+        "title": "List Tags"
       }
     ]
   },
